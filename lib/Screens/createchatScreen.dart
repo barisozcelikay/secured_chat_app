@@ -73,8 +73,8 @@ class _CreateChatState extends State<CreateChat> {
                     children: [
                       InputWidgets(
                         nameController: newChatController,
-                        labelString: "Enter Group Chat Name",
-                        hintString: "Enter Group Chat Name",
+                        labelString: "Create Group Chat Name",
+                        hintString: "Create new Group Chat Name",
                       ),
                       Flexible(
                         child: Container(

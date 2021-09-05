@@ -86,6 +86,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
           isLoading = false;
           isVerified = true;
           cautionText = false;
+
         });
         print("OTP verified");
       } else {

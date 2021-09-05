@@ -1,12 +1,15 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:secured_chat_app/Screens/joinchatScreen.dart';
+import 'package:secured_chat_app/Screens/shareroomScreen.dart';
 import 'package:secured_chat_app/constants.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+
+import 'homeScreen.dart';
 
 final _firestore = FirebaseFirestore.instance;
 late User loggedInUser;
 
-// ADINI GÖNDEREMİYORUMMMMMMMMMMMMMM 04.09.2021
 class ChatScreen extends StatefulWidget {
   static const String id = "chat_screen";
   const ChatScreen({Key? key, this.chatName}) : super(key: key);
@@ -26,7 +29,6 @@ class _ChatScreenState extends State<ChatScreen> {
   late String messageText;
   @override
   void initState() {
-    // TODO: implement initState
     getCurrentUser();
     super.initState();
   }
@@ -105,7 +107,7 @@ class _ChatScreenState extends State<ChatScreen> {
             ],
           ),
         ),
-        /*
+
         drawer: Drawer(
           child: ListView(
             children: [
@@ -126,10 +128,23 @@ class _ChatScreenState extends State<ChatScreen> {
                   color: k_mainColor,
                 ),
                 title: Text("Share"),
+                onTap: () => Navigator.of(context).push(MaterialPageRoute(
+                    builder: (context) => (ShareRoomScreen(
+                      roomName: chatName,
+                    )))),
               ),
+              ListTile(
+                leading: Icon(
+                  Icons.change_circle,
+                  color: k_mainColor
+                ),
+                title: Text("Change Room"),
+                onTap: () => Navigator.pushNamed(context, JoinChat.id),
+                
+              )
             ],
           ),
-        ),*/
+        ),
       ),
     );
   }

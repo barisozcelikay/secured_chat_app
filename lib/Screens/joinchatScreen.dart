@@ -1,9 +1,7 @@
-import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:secured_chat_app/Screens/chatScreen.dart';
 import 'package:secured_chat_app/Widgets/inputWidgets.dart';
-
 import '../constants.dart';
 
 final _firestore = FirebaseFirestore.instance;
@@ -81,7 +79,7 @@ class _JoinChatState extends State<JoinChat> {
                       InputWidgets(
                         nameController: chatNameController,
                         labelString: "Enter Group Chat Name",
-                        hintString: "Enter Group Chat Name",
+                        hintString: "Enter Group Chat That You Join",
                       ),
                       Flexible(
                           child: Container(
