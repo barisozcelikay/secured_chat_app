@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "437393272972",
+    "project_id": "havelsanchat",
+    "storage_bucket": "havelsanchat.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:437393272972:android:712fc47b11c2f107ba4ba9",
+        "android_client_info": {
+          "package_name": "co.havelsanchatapp2021.secured_chat_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "437393272972-7fkcealeeamvgtm8u9mjkmuqbonu2lnj.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAoN2HpCoOKRI92qBBCLWnQBWp4tMm91nA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "437393272972-7fkcealeeamvgtm8u9mjkmuqbonu2lnj.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

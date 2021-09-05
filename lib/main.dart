@@ -1,7 +1,15 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:secured_chat_app/Screens/authScreen.dart';
+import 'package:secured_chat_app/Screens/createchatScreen.dart';
+import 'package:secured_chat_app/Screens/joinchatScreen.dart';
+import 'package:secured_chat_app/Screens/loginScreen.dart';
+import 'package:secured_chat_app/Screens/registrationScreen.dart';
+import 'package:secured_chat_app/Screens/chatScreen.dart';
+import 'package:secured_chat_app/Screens/homeScreen.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized(); // !!!!!!!!
+  await Firebase.initializeApp();
   runApp(MyApp());
 }
 
@@ -21,8 +29,16 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'Club House',
-      home: AuthScreen(),
+      title: 'Havelsan Chat',
+      routes: {
+        HomeScreen.id: (context) => HomeScreen(),
+        LogInScreen.id: (context) => LogInScreen(),
+        RegistrationScreen.id: (context) => RegistrationScreen(),
+        JoinChat.id: (context) => JoinChat(),
+        CreateChat.id: (context) => CreateChat(),
+        ChatScreen.id: (context) => ChatScreen()
+      },
+      home: HomeScreen(),
     );
   }
 }

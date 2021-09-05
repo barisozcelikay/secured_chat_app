@@ -3,22 +3,22 @@ import 'package:flutter/material.dart';
 class InputWidgets extends StatelessWidget {
   const InputWidgets(
       {Key? key,
-      required this.phoneController,
+      required this.nameController,
       required this.hintString,
       required this.labelString})
       : super(key: key);
 
-  final TextEditingController phoneController;
+  final TextEditingController nameController;
   final labelString;
   final hintString;
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.symmetric(horizontal: 30, vertical: 30),
+      padding: EdgeInsets.symmetric(horizontal: 30, vertical: 20),
       child: TextField(
-        keyboardType: TextInputType.phone,
-        controller: phoneController,
+        keyboardType: TextInputType.emailAddress,
+        controller: nameController,
         decoration: InputDecoration(
             border: OutlineInputBorder(
                 borderRadius: BorderRadius.all(Radius.circular(40)),
