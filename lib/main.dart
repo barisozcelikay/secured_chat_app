@@ -6,7 +6,6 @@ import 'package:secured_chat_app/Screens/loginScreen.dart';
 import 'package:secured_chat_app/Screens/registrationScreen.dart';
 import 'package:secured_chat_app/Screens/chatScreen.dart';
 import 'package:secured_chat_app/Screens/homeScreen.dart';
-import 'package:secured_chat_app/Screens/shareroomScreen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized(); // !!!!!!!!

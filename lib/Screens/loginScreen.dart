@@ -10,6 +10,8 @@ import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:secured_chat_app/constants.dart';
 import 'package:email_auth/email_auth.dart';
 
+import 'createchatScreen.dart';
+
 class LogInScreen extends StatefulWidget {
   static const String id = "login_screen";
   const LogInScreen({Key? key}) : super(key: key);
@@ -27,6 +29,7 @@ class _LogInScreenState extends State<LogInScreen> {
   bool isOtpScreen = false;
   bool isVerified = false;
   bool cautionText = false;
+  bool isLoggedIn = false;
 
   final _auth = FirebaseAuth.instance;
   EmailAuth emailAuth = EmailAuth(sessionName: "HAVELSAN Chat");
@@ -51,16 +54,18 @@ class _LogInScreenState extends State<LogInScreen> {
           email: emailController.text, password: "emptypassword");
 
       if (user != null) {
-        Navigator.pushNamed(context, JoinChat.id);
+        //Navigator.pushNamed(context, JoinChat.id);
         setState(() {
           isLoading = false;
           cautionText = false;
+          isLogedIn = true;
         });
       }
     } catch (e) {
       setState(() {
         cautionText = true;
         isLoading = false;
+        isLogedIn = false;
       });
     }
   }
@@ -95,55 +100,126 @@ class _LogInScreenState extends State<LogInScreen> {
                       color: Colors.white,
                       borderRadius: BorderRadius.circular(60)),
                   child: SingleChildScrollView(
-                      child: Column(
-                    children: [
-                      SizedBox(
-                        height: 40,
-                        child: cautionText
-                            ? Container(
-                                child: Text(
-                                  emailController.text + " not found",
-                                  style: TextStyle(
-                                      color: Colors.red,
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 18),
-                                ),
-                                alignment: Alignment.bottomCenter,
-                              )
-                            : null,
-                      ),
-                      InputWidgets(
-                        nameController: emailController,
-                        labelString: "Enter your e-mail address",
-                        hintString: "Enter valid e-mail address",
-                      ),
-                      SizedBox(
-                        height: 30,
-                      ),
-                      isLoading
-                          ? CircularProgressIndicator(
-                              valueColor:
-                                  AlwaysStoppedAnimation<Color>(Colors.red))
-                          : Container(
-                              height: 50,
-                              width: 250,
-                              decoration: BoxDecoration(
-                                color: Colors.red,
-                                borderRadius: BorderRadius.circular(20),
+                    child: !isLogedIn
+                        ? Column(
+                            children: [
+                              SizedBox(
+                                height: 40,
+                                child: cautionText
+                                    ? Container(
+                                        child: Text(
+                                          emailController.text + " not found",
+                                          style: TextStyle(
+                                              color: Colors.red,
+                                              fontWeight: FontWeight.bold,
+                                              fontSize: 18),
+                                        ),
+                                        alignment: Alignment.bottomCenter,
+                                      )
+                                    : null,
                               ),
-                              child: TextButton(
-                                  child: Text(
-                                    "LogIn",
-                                    style: TextStyle(
-                                        color: Colors.white, fontSize: 25),
-                                  ),
-                                  onPressed: () => logingIn()
-                                  //isOtpScreen ? otpSignIn() : phoneAuth();
-                                  //Navigator.pushNamed(context, HomeScreen.id),
-                                  ),
-                            )
-                    ],
-                  )),
+                              InputWidgets(
+                                nameController: emailController,
+                                labelString: "Enter your e-mail address",
+                                hintString: "Enter valid e-mail address",
+                              ),
+                              SizedBox(
+                                height: 30,
+                              ),
+                              isLoading
+                                  ? CircularProgressIndicator(
+                                      valueColor: AlwaysStoppedAnimation<Color>(
+                                          Colors.red))
+                                  : Container(
+                                      height: 50,
+                                      width: 250,
+                                      decoration: BoxDecoration(
+                                        color: Colors.red,
+                                        borderRadius: BorderRadius.circular(20),
+                                      ),
+                                      child: TextButton(
+                                          child: Text(
+                                            "LogIn",
+                                            style: TextStyle(
+                                                color: Colors.white,
+                                                fontSize: 25),
+                                          ),
+                                          onPressed: () => logingIn()
+                                          //isOtpScreen ? otpSignIn() : phoneAuth();
+                                          //Navigator.pushNamed(context, HomeScreen.id),
+                                          ),
+                                    )
+                            ],
+                          )
+                        : Column(
+                            children: [
+                              SizedBox(
+                                  height: 40,
+                                  child: Container(
+                                    child: Text(
+                                      "${_auth.currentUser!.email.toString()} is logged in.",
+                                      style: TextStyle(
+                                          color: Colors.red,
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 18),
+                                    ),
+                                    alignment: Alignment.bottomCenter,
+                                  )),
+                              SizedBox(
+                                height: 100,
+                              ),
+                              isLoading
+                                  ? CircularProgressIndicator(
+                                      valueColor: AlwaysStoppedAnimation<Color>(
+                                          Colors.red))
+                                  : Column(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceEvenly,
+                                      children: [
+                                        Container(
+                                            height: 50,
+                                            width: 250,
+                                            decoration: BoxDecoration(
+                                              color: Colors.red,
+                                              borderRadius:
+                                                  BorderRadius.circular(20),
+                                            ),
+                                            child: TextButton(
+                                                child: Text(
+                                                  "Create Chat",
+                                                  style: TextStyle(
+                                                      color: Colors.white,
+                                                      fontSize: 25),
+                                                ),
+                                                onPressed: () =>
+                                                    Navigator.pushNamed(context,
+                                                        CreateChat.id))),
+                                        SizedBox(
+                                          height: 40,
+                                        ),
+                                        Container(
+                                            height: 50,
+                                            width: 250,
+                                            decoration: BoxDecoration(
+                                              color: Colors.red,
+                                              borderRadius:
+                                                  BorderRadius.circular(20),
+                                            ),
+                                            child: TextButton(
+                                                child: Text(
+                                                  "Join Chat",
+                                                  style: TextStyle(
+                                                      color: Colors.white,
+                                                      fontSize: 25),
+                                                ),
+                                                onPressed: () =>
+                                                    Navigator.pushNamed(
+                                                        context, JoinChat.id)))
+                                      ],
+                                    )
+                            ],
+                          ),
+                  ),
                 ),
               )
             ],

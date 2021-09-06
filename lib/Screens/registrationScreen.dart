@@ -77,16 +77,14 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
         recipientMail: emailController.text, userOtp: otpController.text);
 
     try {
-      final user = await _auth.createUserWithEmailAndPassword(
-          email: emailController.text, password: "emptypassword");
-
       if (res) {
         print("oye");
+        final user = await _auth.createUserWithEmailAndPassword(
+            email: emailController.text, password: "emptypassword");
         setState(() {
           isLoading = false;
           isVerified = true;
           cautionText = false;
-
         });
         print("OTP verified");
       } else {

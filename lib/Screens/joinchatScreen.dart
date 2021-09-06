@@ -1,10 +1,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:secured_chat_app/Screens/chatScreen.dart';
+import 'package:secured_chat_app/Widgets/customalert.dart';
+import 'package:secured_chat_app/Widgets/customsnackbar.dart';
 import 'package:secured_chat_app/Widgets/inputWidgets.dart';
 import '../constants.dart';
-
-final _firestore = FirebaseFirestore.instance;
 
 class JoinChat extends StatefulWidget {
   static const String id = "joinchat_screen";
@@ -16,32 +16,64 @@ class JoinChat extends StatefulWidget {
 }
 
 class _JoinChatState extends State<JoinChat> {
+  bool cautionText = false;
+  bool roomValid = false;
+  bool isLoading = false;
+
   void checkRoomValid() async {
-    final snapshot = await _firestore.collection(chatNameController.text);
-    print(snapshot.id +
-        " " +
-        snapshot.path +
-        " " +
-        snapshot.parent.toString() +
-        " " +
-        snapshot.firestore.toString());
-    if (snapshot != null && snapshot.parent == null) {
-      setState(() {
-        roomValid = true;
-      });
-      Navigator.of(context).push(MaterialPageRoute(
-          builder: (context) => (ChatScreen(
-                chatName: chatNameController.text,
-              ))));
-      //doesnt exist
-    } else {
-      setState(() {
-        roomValid = false;
-      });
-    }
+    setState(() {
+      isLoading = true;
+    });
+    var snapshot =
+        FirebaseFirestore.instance.collection('/${chatNameController.text}');
+
+    snapshot.get().then((querySnapshot) {
+      print('Size of documents in collection: ${querySnapshot.size}');
+      if (querySnapshot.size > 0) {
+        setState(() {
+          roomValid = true;
+          cautionText = false;
+          isLoading = false;
+        });
+        Navigator.of(context).push(MaterialPageRoute(
+            builder: (context) => (ChatScreen(
+                  chatName: chatNameController.text,
+                ))));
+        //doesnt exist
+      } else {
+        setState(() {
+          roomValid = false;
+          cautionText = true;
+          isLoading = false;
+          /* CustomSnackBar sentSnack = CustomSnackBar(
+              message: 'Hata.',
+              type: AlertType.Error,
+              key: Key('ErrorSnack-1'),
+              context: context);
+
+
+          CustomAlert cstdial = CustomAlert(
+            message: 'Hata',
+            customTitle: 'Hata title',
+            buttonName: 'Anladım',
+            type: AlertType.Error,
+            key: Key('TestAlerts'),
+          );
+
+          showDialog(
+            context: context,
+            builder: (BuildContext context) {
+              return cstdial;
+            },
+          );
+          */
+
+          //  ScaffoldMessenger.of(context).showSnackBar(sentSnack);
+        });
+      }
+    });
   }
 
-  bool roomValid = false;
   final TextEditingController chatNameController = TextEditingController();
   @override
   Widget build(BuildContext context) {
@@ -76,6 +108,19 @@ class _JoinChatState extends State<JoinChat> {
                       child: Column(
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: [
+                      SizedBox(
+                        child: cautionText && isLoading != true
+                            ? Text(
+                                "This room is not available",
+                                style: TextStyle(
+                                    color: Colors.red,
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 18),
+                              )
+                            : !isLoading
+                                ? Text("")
+                                : CircularProgressIndicator(),
+                      ),
                       InputWidgets(
                         nameController: chatNameController,
                         labelString: "Enter Group Chat Name",

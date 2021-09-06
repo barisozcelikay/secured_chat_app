@@ -7,8 +7,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 
 import '../constants.dart';
 
-final _firestore = FirebaseFirestore.instance;
-
 class CreateChat extends StatefulWidget {
   static const String id = "createchat_screen";
   const CreateChat({Key? key}) : super(key: key);
@@ -20,21 +18,55 @@ class CreateChat extends StatefulWidget {
 class _CreateChatState extends State<CreateChat> {
   final TextEditingController newChatController = TextEditingController();
   bool isCollectionCreated = false;
-  void createCollection() async {
-    final a = await _firestore
-        .collection(newChatController.text)
-        .add({'text': "", 'sender': ""});
+  bool cautionText = false;
+  bool roomValid = false;
+  bool isLoading = false;
+
+  void createCollection() {
+    setState(() {
+      isLoading = true;
+      isCollectionCreated = false;
+    });
+    var snapshot =
+        FirebaseFirestore.instance.collection('/${newChatController.text}');
+
+    snapshot.get().then((querySnapshot) {
+      if (querySnapshot.size == 0) {
+        setState(() {
+          roomValid = true;
+          cautionText = false;
+          isCollectionCreated = true;
+          isLoading = false;
+        });
+        print("oda acildi");
+        Navigator.of(context).push(MaterialPageRoute(
+            builder: (context) => (ChatScreen(
+                  chatName: newChatController.text,
+                ))));
+      } else {
+        print("oda acilmadi");
+        setState(() {
+          roomValid = false;
+          cautionText = true;
+          isCollectionCreated = false;
+          isLoading = false;
+        });
+      }
+    });
+
+/*
     setState(() {
       if (a != null) {
         isCollectionCreated = true;
+        Navigator.of(context).push(MaterialPageRoute(
+            builder: (context) => (ChatScreen(
+                  chatName: newChatController.text,
+                ))));
       } else {
         isCollectionCreated = false;
       }
-      Navigator.of(context).push(MaterialPageRoute(
-          builder: (context) => (ChatScreen(
-                chatName: newChatController.text,
-              ))));
     });
+    */
   }
 
   @override
@@ -71,6 +103,20 @@ class _CreateChatState extends State<CreateChat> {
                       child: Column(
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: [
+                      SizedBox(
+                        child: cautionText
+                            ? Text(
+                                'You can not create room with named ${newChatController.text}',
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                    color: Colors.red,
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 18),
+                              )
+                            : !isLoading
+                                ? Text("")
+                                : CircularProgressIndicator(),
+                      ),
                       InputWidgets(
                         nameController: newChatController,
                         labelString: "Create Group Chat Name",

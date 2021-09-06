@@ -1,6 +1,9 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:secured_chat_app/Screens/createchatScreen.dart';
 import 'package:secured_chat_app/Screens/joinchatScreen.dart';
+import 'package:secured_chat_app/Screens/profileScreen.dart';
 import 'package:secured_chat_app/Screens/shareroomScreen.dart';
 import 'package:secured_chat_app/constants.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -58,10 +61,18 @@ class _ChatScreenState extends State<ChatScreen> {
               onPressed: () => Scaffold.of(context).openDrawer(),
             ),
           ), // Hero(tag: 'yildiz', child: Image.asset("images/YILDIZ.png")),
-          title: Text("Chat Screen"),
+          title: Text(chatName),
           actions: [
-            Padding(
-                padding: EdgeInsets.only(right: 20), child: Icon(Icons.power))
+            IconButton(
+              padding: EdgeInsets.only(right: 20),
+              icon: Icon(Icons.power_settings_new_outlined),
+              onPressed: () async {
+                FirebaseAuth.instance.signOut().then((value) => {
+                      Navigator.pushReplacement(context,
+                          MaterialPageRoute(builder: (context) => HomeScreen()))
+                    });
+              },
+            )
           ],
         ),
         body: SafeArea(
@@ -107,9 +118,9 @@ class _ChatScreenState extends State<ChatScreen> {
             ],
           ),
         ),
-
         drawer: Drawer(
           child: ListView(
+            padding: EdgeInsets.all(10),
             children: [
               ListTile(
                 leading: Icon(
@@ -130,18 +141,33 @@ class _ChatScreenState extends State<ChatScreen> {
                 title: Text("Share"),
                 onTap: () => Navigator.of(context).push(MaterialPageRoute(
                     builder: (context) => (ShareRoomScreen(
-                      roomName: chatName,
-                    )))),
+                          roomName: chatName,
+                        )))),
+              ),
+              ListTile(
+                leading: Icon(Icons.change_circle, color: k_mainColor),
+                title: Text("Change Room"),
+                onTap: () => Navigator.pushNamed(context, JoinChat.id),
               ),
               ListTile(
                 leading: Icon(
-                  Icons.change_circle,
-                  color: k_mainColor
+                  Icons.create_new_folder,
+                  color: k_mainColor,
                 ),
-                title: Text("Change Room"),
-                onTap: () => Navigator.pushNamed(context, JoinChat.id),
-                
-              )
+                title: Text("Create Room"),
+                onTap: () => Navigator.pushNamed(context, CreateChat.id),
+              ),
+              /*ListTile(
+                leading: Icon(
+                  Icons.person,
+                  color: k_mainColor,
+                ),
+                title: Text("Profile"),
+                onTap: () => Navigator.of(context).push(MaterialPageRoute(
+                    builder: (context) => (ProfileScreen(
+                          roomName: chatName,
+                        )))),
+              )*/
             ],
           ),
         ),
