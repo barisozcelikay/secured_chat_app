@@ -29,7 +29,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'Havelsan Chat',
+      title: 'Peace Chat',
       routes: {
         HomeScreen.id: (context) => HomeScreen(),
         LogInScreen.id: (context) => LogInScreen(),

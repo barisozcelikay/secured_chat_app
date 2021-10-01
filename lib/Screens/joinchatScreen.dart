@@ -97,7 +97,8 @@ class _JoinChatState extends State<JoinChat> {
                           child: Hero(
                             tag: 'yildiz',
                             child: Image.asset(
-                              "images/YILDIZ.png",
+                              "images/peace-finger-sign-png.png",
+                              color: Colors.red,
                             ),
                           ),
                         ),

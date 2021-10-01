@@ -34,13 +34,16 @@ class _HomeScreenState extends State<HomeScreen> {
                           child: Hero(
                             tag: 'yildiz',
                             child: Image.asset(
-                              "images/YILDIZ.png",
+                              "images/peace-finger-sign-png.png",
+                              width: 50,
+                              height: 50,
+                              color: Colors.red,
                             ),
                           ),
                         ),
                         Expanded(
                           child: Text(
-                            "HAVELSAN Chat",
+                            "Peace Chat",
                             style: TextStyle(
                                 fontSize: 40,
                                 fontWeight: FontWeight.bold,

@@ -57,6 +57,7 @@ flutter:
       - images/HAVELSAN_DIKEY_LOGO.png
       - images/HAVELSAN_YATAY_LOGO.png
       - images/YILDIZ.png
+      - images/peace-finger-sign-png.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.

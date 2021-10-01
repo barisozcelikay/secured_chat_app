@@ -85,7 +85,8 @@ class _LogInScreenState extends State<LogInScreen> {
                   child: Hero(
                     tag: 'yildiz',
                     child: Image.asset(
-                      "images/YILDIZ.png",
+                      "images/peace-finger-sign-png.png",
+                      color: Colors.red,
                     ),
                   ),
                 ),

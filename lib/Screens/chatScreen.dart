@@ -56,8 +56,12 @@ class _ChatScreenState extends State<ChatScreen> {
           backgroundColor: k_mainColor,
           leading: Builder(
             builder: (context) => IconButton(
-              icon:
-                  Hero(tag: "yildiz", child: Image.asset('images/YILDIZ.png')),
+              icon: Hero(
+                  tag: "yildiz",
+                  child: Image.asset(
+                    'images/peace-finger-sign-png.png',
+                    color: Colors.red,
+                  )),
               onPressed: () => Scaffold.of(context).openDrawer(),
             ),
           ), // Hero(tag: 'yildiz', child: Image.asset("images/YILDIZ.png")),
